@@ -1,0 +1,101 @@
+CREATE DATABASE sqlix;
+
+USE sqlix;
+
+CREATE TABLE province (
+	num_province INT AUTO_INCREMENT,
+	nom_province VARCHAR(30) NOT NULL,
+	nom_gouverneur VARCHAR(30) NOT NULL,
+	PRIMARY KEY (num_province)
+	)
+	ENGINE = InnoDB;
+
+CREATE TABLE village (
+	num_village INT AUTO_INCREMENT,
+	nom_village VARCHAR(30) NOT NULL,
+	nb_huttes INT NOT NULL,
+	num_province INT NOT NULL,
+	PRIMARY KEY (num_village),
+	FOREIGN KEY (num_province) REFERENCES province(num_province)
+	)
+	ENGINE = InnoDB;
+
+CREATE TABLE resserre (
+	num_resserre INT AUTO_INCREMENT,
+	nom_resserre VARCHAR(30) NOT NULL,
+	superficie INT NOT NULL,
+	num_village INT NOT NULL,
+	PRIMARY KEY (num_resserre),
+	FOREIGN KEY (num_village) REFERENCES village(num_village)
+	)
+	ENGINE = InnoDB;
+
+CREATE TABLE qualite (
+	num_qualite INT AUTO_INCREMENT,
+	lib_qualite VARCHAR(30) NOT NULL,
+	nb_huttes INT NOT NULL,
+	num_province INT NOT NULL,
+	PRIMARY KEY (num_qualite)
+	)
+	ENGINE = InnoDB;
+
+CREATE TABLE habitant (
+	num_hab INT AUTO_INCREMENT,
+	nom VARCHAR(30) NOT NULL,
+	age INT NOT NULL,
+	num_qualite INT,
+	num_village INT NOT NULL,
+	PRIMARY KEY (num_hab),
+	FOREIGN KEY (num_qualite) REFERENCES qualite(num_qualite),
+	FOREIGN KEY (num_village) REFERENCES village(num_village)
+	)
+	ENGINE = InnoDB;
+	
+CREATE TABLE potion (
+	num_potion INT AUTO_INCREMENT,
+	lib_potion VARCHAR(40),
+	formule VARCHAR(30),
+	constituant_principal VARCHAR(30),
+	PRIMARY KEY (num_potion)
+	)
+	ENGINE = InnoDB;
+
+CREATE TABLE fabriquer (
+	num_potion INT NOT NULL,
+	num_hab INT NOT NULL,
+	FOREIGN KEY (num_potion) REFERENCES potion(num_potion),
+	FOREIGN KEY (num_hab) REFERENCES habitant(num_hab)
+	)
+	ENGINE = InnoDB;
+
+CREATE TABLE absorber (
+	num_potion INT NOT NULL,
+	date_a DATETIME,
+	num_hab INT NOT NULL,
+	quantite INT NOT NULL,
+	PRIMARY KEY (num_potion,date_a),
+	FOREIGN KEY (num_hab) REFERENCES habitant(num_hab)
+	)
+	ENGINE = InnoDB;
+	
+CREATE TABLE categorie (
+	code_cat CHAR(3),
+	nom_categ VARCHAR(50),
+	nb_points INT NOT NULL,
+	PRIMARY KEY (code_cat)
+	)
+	ENGINE = InnoDB;
+	
+CREATE TABLE trophee (
+	num_trophee INT AUTO_INCREMENT,
+	date_prise DATETIME,
+	code_cat CHAR(3),
+	num_hab INT NOT NULL,
+	num_resserre INT NOT NULL,
+	PRIMARY KEY (num_trophee),
+	FOREIGN KEY (code_cat) REFERENCES categorie(code_cat),
+	FOREIGN KEY (num_hab) REFERENCES habitant(num_hab),
+	FOREIGN KEY (num_resserre) REFERENCES resserre(num_resserre)
+	)
+	ENGINE = InnoDB;
+	
