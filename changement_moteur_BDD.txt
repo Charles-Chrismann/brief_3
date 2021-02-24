@@ -1,0 +1,8 @@
+Le moteur de base de donné choisi est InnoDB car il supporte les clé étrangères contrairement à MyISAM.
+
+Problème rencontré:
+- Table absorber : Duplication d'enregistrement 
+	Resolu en mettant num_potion, date_a, num_hab en clé primaire
+
+-table trophee : num_preuneur n'existait pas
+	Resolu : c'était num_hab
