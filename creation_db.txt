@@ -73,8 +73,9 @@ CREATE TABLE absorber (
 	date_a DATETIME,
 	num_hab INT NOT NULL,
 	quantite INT NOT NULL,
-	PRIMARY KEY (num_potion,date_a),
-	FOREIGN KEY (num_hab) REFERENCES habitant(num_hab)
+	PRIMARY KEY (num_potion,date_a,num_hab),
+	FOREIGN KEY (num_hab) REFERENCES habitant(num_hab),
+	FOREIGN KEY (num_potion) REFERENCES potion(num_potion)
 	)
 	ENGINE = InnoDB;
 	

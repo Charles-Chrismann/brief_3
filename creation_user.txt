@@ -1,4 +1,2 @@
-DROP USER sqlix_u@localhost;
-FLUSH PRIVILEGES;
 CREATE USER 'sqlix_u'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON sqlix.* TO 'sqlix_u'@'localhost';
